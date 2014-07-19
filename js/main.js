@@ -11,16 +11,60 @@
 //# sourceMappingURL=head.min.js.map
 */
 
+
+
 // Load Assets
 head.load("js/vendor/underscore-min.js");
 head.load("js/vendor/native.history.min.js");
+head.load("js/vendor/url.min.js");
 head.load("js/vendor/jquery-1.11.0.min.js",function(){
 	main_fn();
-	});
+});
+// gloavl variable
+var datajson = {};
 function main_fn() {
-	jQuery(document).ready(function() {
-        console.log('check');
-		var State = History.getState();
-		console.log(State);
+
+
+  jQuery(document).ready(function() {
+    var urlQuery = url("?");
+
+    // load data 
+    var portfolio = {};   
+    $.ajax({
+      url: 'data/portfolio.json',
+      dataType: 'json',
+      async: true,
+      success: function(data) {
+        datajson.portfolio = data;        
+        renderPortfolio();
+      }
     });
-	}
+
+    // portfolio view
+    function renderPortfolio(){
+
+      var pageId = url("?page"),      
+      postperpage = 2;
+      portfolio.length = datajson.portfolio.length;
+      var pagetoalFl =  portfolio.length/postperpage;
+      datajson.portfolio.totalpage =pagetoalFl.toFixed(0);
+
+
+      if(pageId!=null) {
+        portfolioControler();
+      }
+    }
+
+    function showPortfolioPage(pageId){
+
+    }
+    function portfolioControler() {      
+      var pagebottom = jQuery("#pagebottom").html();
+      jQuery(".demo_1").after(pagebottom);
+      jQuery(".totalPage").text(datajson.portfolio.totalpage);
+    }
+
+
+
+  });
+}
