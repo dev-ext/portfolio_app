@@ -24,7 +24,6 @@ head.load("js/vendor/jquery-1.11.0.min.js",function(){
 var datajson = {};
 function main_fn() {
 
-
   jQuery(document).ready(function() {
     var urlQuery = url("?");
 
@@ -41,30 +40,62 @@ function main_fn() {
     });
 
     // portfolio view
-    function renderPortfolio(){
-
-      var pageId = url("?page"),      
-      postperpage = 2;
-      portfolio.length = datajson.portfolio.length;
-      var pagetoalFl =  portfolio.length/postperpage;
-      datajson.portfolio.totalpage =pagetoalFl.toFixed(0);
+    var pageId = parseInt(url("?page")),
+    postperpage = 4;
 
 
-      if(pageId!=null) {
-        portfolioControler();
-      }
+    if(pageId!=null) {
+      function renderPortfolio(){
+       portfolio.length = datajson.portfolio.length;
+       var pagetoalFl =  portfolio.length/postperpage;
+       datajson.portfolio.totalpage =pagetoalFl.toFixed(0);
+       portfolioControler();
+       showPortfolioPage();
+     }
+   }
+   // portfolio item genarator
+   function showPortfolioPage(){
+    var startRange = '';
+    if (pageId==1){
+      startRange=pageId-1;
+    }else {
+      startRange=(pageId-1)*postperpage;
+    }
+    var endRange = (startRange+postperpage)-1;
+    for (var i=startRange;i<endRange;i++){
+      var template = jQuery("#tmp_12").html();
+      var test= _.template(template,{index:i,site_url:datajson.portfolio[i].site_url,thumbnail_url:datajson.portfolio[i].thumbnail_url});
+      jQuery(".demo_1").append(test);
     }
 
-    function showPortfolioPage(pageId){
-
+  }
+  // portfolio navigation 
+  function portfolioControler() {      
+    var pagebottom = jQuery("#pagebottom").html();
+    jQuery(".demo_1").after(pagebottom);
+    jQuery(".pageIndicate").text(pageId+"/"+datajson.portfolio.totalpage);
+    var nextpageId = pageId+1,
+    prevPageId = pageId-1;
+    // prev    
+    if (prevPageId<datajson.portfolio.totalpage && prevPageId>0) {      
+      jQuery(".prevPage").attr({
+        "href": "?page="+prevPageId
+      });
+    }else{
+      jQuery(".prevPage").hide();
+    }    
+    // next
+    if (pageId<datajson.portfolio.totalpage) {      
+      jQuery(".nextPage").attr({
+        "href": "?page="+nextpageId
+      });
+    }else{
+      jQuery(".nextPage").hide();
     }
-    function portfolioControler() {      
-      var pagebottom = jQuery("#pagebottom").html();
-      jQuery(".demo_1").after(pagebottom);
-      jQuery(".totalPage").text(datajson.portfolio.totalpage);
-    }
+    
+  }
 
 
 
-  });
+});
 }

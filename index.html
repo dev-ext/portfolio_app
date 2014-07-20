@@ -97,10 +97,17 @@ body {
             <script type="text/template" id="pagebottom">
             <div class="pagebottom row">
             <ul class="pager">
-            <li><a href="#">Previous</a></li>
-            <li> Total Page : <span class="totalPage"> datajson.portfolio.totalpage</span></li>
-            <li><a href="#">Next</a></li>
+            <li><a href="#"class="prevPage">Previous</a></li>
+            <li> <span class="pageIndicate"></span></li>
+            <li><a href="#" class="nextPage">Next</a></li>
             </ul>
+            </div>
+            </script>
+            <script type="text/template" id="tmp_12">
+            <div class="col-md-4" id="id<%= index %>">
+            <h2 class="project_name"></h2>
+            <img class="thumbnail_url thumbnail img-responsive" src=images/<%= thumbnail_url %> />
+            <p><a class="btn btn-default site_url" href="<%= site_url %>" role="button">Live Site</a></p>
             </div>
             </script>
             </body>
