@@ -17,7 +17,8 @@
 head.load("js/vendor/underscore-min.js");
 head.load("js/vendor/native.history.min.js");
 head.load("js/vendor/url.min.js");
-head.load("js/vendor/jquery-1.11.0.min.js",function(){
+head.load("js/vendor/string.min.js");
+head.load("js/vendor/jquery-1.11.0.min.js","js/vendor/isotope.pkgd.min.js",function(){
 	main_fn();
 });
 // gloavl variable
@@ -32,6 +33,7 @@ function main_fn() {
     $.ajax({
       url: 'data/portfolio.json',
       dataType: 'json',
+      cache:false,
       async: true,
       success: function(data) {
         datajson.portfolio = data;        
@@ -41,18 +43,30 @@ function main_fn() {
 
     // portfolio view
     var pageId = parseInt(url("?page")),
-    postperpage = 4;
+    postperpage = 5;
+
+    function isInteger(x) { return Math.floor(x) === x; }
+    function isFloat(x) { return !!(x % 1); }
+    function renderPortfolio(){
+      if(!isNaN(pageId)) {
+        jQuery(".jumbotron").remove();
+
+        portfolio.length = datajson.portfolio.length;
+        var pagetoalFl =  portfolio.length/postperpage;
+
+        if (pagetoalFl<1) {
+          datajson.portfolio.totalpage=1;
+        }if (isFloat(pagetoalFl)){
+          datajson.portfolio.totalpage=parseInt(pagetoalFl)+1;
+        }else {
+          datajson.portfolio.totalpage=pagetoalFl
+        }
 
 
-    if(pageId!=null) {
-      function renderPortfolio(){
-       portfolio.length = datajson.portfolio.length;
-       var pagetoalFl =  portfolio.length/postperpage;
-       datajson.portfolio.totalpage =pagetoalFl.toFixed(0);
-       portfolioControler();
-       showPortfolioPage();
-     }
-   }
+        portfolioControler();
+        showPortfolioPage();
+      }
+    }
    // portfolio item genarator
    function showPortfolioPage(){
     var startRange = '';
@@ -62,13 +76,30 @@ function main_fn() {
       startRange=(pageId-1)*postperpage;
     }
     var endRange = (startRange+postperpage)-1;
-    for (var i=startRange;i<endRange;i++){
-      var template = jQuery("#tmp_12").html();
-      var test= _.template(template,{index:i,site_url:datajson.portfolio[i].site_url,thumbnail_url:datajson.portfolio[i].thumbnail_url});
-      jQuery(".demo_1").append(test);
+   // console.log(startRange,endRange);
+   for (var i=startRange;i<=endRange;i++){
+    var template = jQuery("#tmp_12").html();
+    var thisData = datajson.portfolio[i];
+    thisData.index=i;
+    if (S(thisData.thumbnail_url).contains('http') || S(thisData.thumbnail_url).contains('https')){
+      // nothig to modify
+    } else {
+      thisData.thumbnail_url="images/"+thisData.thumbnail_url;
     }
 
+    console.log(thisData);
+    var test= _.template(template,thisData);
+    jQuery(".demo_1").append(test);    
   }
+  jQuery(window).load(function() {
+   var $container = jQuery(".demo_1");    
+   $container.isotope({
+    itemSelector: '.col-md-4'
+
+  });
+ });
+  
+}
   // portfolio navigation 
   function portfolioControler() {      
     var pagebottom = jQuery("#pagebottom").html();
@@ -95,7 +126,11 @@ function main_fn() {
     
   }
 
-
+// test 
+var urll = "";
+//var url = "53c83c4b04700.jpeg";
+urll = "http://www.awwwards.com/screenshots/2014/07/53c83c4b04700.jpeg";
+console.log(S(urll).contains('http'));
 
 });
 }
