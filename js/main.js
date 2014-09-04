@@ -1,6 +1,5 @@
-///////////////////////////////////////////
-// 			head.js						//
-//////////////////////////////////////////
+
+// JavaScript Document
 /*! head.core - v1.0.2 */
 (function(n,t){"use strict";function r(n){a[a.length]=n}function k(n){var t=new RegExp(" ?\\b"+n+"\\b");c.className=c.className.replace(t,"")}function p(n,t){for(var i=0,r=n.length;i<r;i++)t.call(n,n[i],i)}function tt(){var t,e,f,o;c.className=c.className.replace(/ (w-|eq-|gt-|gte-|lt-|lte-|portrait|no-portrait|landscape|no-landscape)\d+/g,"");t=n.innerWidth||c.clientWidth;e=n.outerWidth||n.screen.width;u.screen.innerWidth=t;u.screen.outerWidth=e;r("w-"+t);p(i.screens,function(n){t>n?(i.screensCss.gt&&r("gt-"+n),i.screensCss.gte&&r("gte-"+n)):t<n?(i.screensCss.lt&&r("lt-"+n),i.screensCss.lte&&r("lte-"+n)):t===n&&(i.screensCss.lte&&r("lte-"+n),i.screensCss.eq&&r("e-q"+n),i.screensCss.gte&&r("gte-"+n))});f=n.innerHeight||c.clientHeight;o=n.outerHeight||n.screen.height;u.screen.innerHeight=f;u.screen.outerHeight=o;u.feature("portrait",f>t);u.feature("landscape",f<t)}function it(){n.clearTimeout(b);b=n.setTimeout(tt,50)}var y=n.document,rt=n.navigator,ut=n.location,c=y.documentElement,a=[],i={screens:[240,320,480,640,768,800,1024,1280,1440,1680,1920],screensCss:{gt:!0,gte:!1,lt:!0,lte:!1,eq:!1},browsers:[{ie:{min:6,max:11}}],browserCss:{gt:!0,gte:!1,lt:!0,lte:!1,eq:!0},html5:!0,page:"-page",section:"-section",head:"head"},v,u,s,w,o,h,l,d,f,g,nt,e,b;if(n.head_conf)for(v in n.head_conf)n.head_conf[v]!==t&&(i[v]=n.head_conf[v]);u=n[i.head]=function(){u.ready.apply(null,arguments)};u.feature=function(n,t,i){return n?(Object.prototype.toString.call(t)==="[object Function]"&&(t=t.call()),r((t?"":"no-")+n),u[n]=!!t,i||(k("no-"+n),k(n),u.feature()),u):(c.className+=" "+a.join(" "),a=[],u)};u.feature("js",!0);s=rt.userAgent.toLowerCase();w=/mobile|android|kindle|silk|midp|phone|(windows .+arm|touch)/.test(s);u.feature("mobile",w,!0);u.feature("desktop",!w,!0);s=/(chrome|firefox)[ \/]([\w.]+)/.exec(s)||/(iphone|ipad|ipod)(?:.*version)?[ \/]([\w.]+)/.exec(s)||/(android)(?:.*version)?[ \/]([\w.]+)/.exec(s)||/(webkit|opera)(?:.*version)?[ \/]([\w.]+)/.exec(s)||/(msie) ([\w.]+)/.exec(s)||/(trident).+rv:(\w.)+/.exec(s)||[];o=s[1];h=parseFloat(s[2]);switch(o){case"msie":case"trident":o="ie";h=y.documentMode||h;break;case"firefox":o="ff";break;case"ipod":case"ipad":case"iphone":o="ios";break;case"webkit":o="safari"}for(u.browser={name:o,version:h},u.browser[o]=!0,l=0,d=i.browsers.length;l<d;l++)for(f in i.browsers[l])if(o===f)for(r(f),g=i.browsers[l][f].min,nt=i.browsers[l][f].max,e=g;e<=nt;e++)h>e?(i.browserCss.gt&&r("gt-"+f+e),i.browserCss.gte&&r("gte-"+f+e)):h<e?(i.browserCss.lt&&r("lt-"+f+e),i.browserCss.lte&&r("lte-"+f+e)):h===e&&(i.browserCss.lte&&r("lte-"+f+e),i.browserCss.eq&&r("eq-"+f+e),i.browserCss.gte&&r("gte-"+f+e));else r("no-"+f);r(o);r(o+parseInt(h,10));i.html5&&o==="ie"&&h<9&&p("abbr|article|aside|audio|canvas|details|figcaption|figure|footer|header|hgroup|main|mark|meter|nav|output|progress|section|summary|time|video".split("|"),function(n){y.createElement(n)});p(ut.pathname.split("/"),function(n,u){if(this.length>2&&this[u+1]!==t)u&&r(this.slice(u,u+1).join("-").toLowerCase()+i.section);else{var f=n||"index",e=f.indexOf(".");e>0&&(f=f.substring(0,e));c.id=f.toLowerCase()+i.page;u||r("root"+i.section)}});u.screen={height:n.screen.height,width:n.screen.width};tt();b=0;n.addEventListener?n.addEventListener("resize",it,!1):n.attachEvent("onresize",it)})(window);
 /*! head.css3 - v1.0.0 */
@@ -10,127 +9,128 @@
 /*
 //# sourceMappingURL=head.min.js.map
 */
+var site = {};
+// Avoid `console` errors in browsers that lack a console.
+(function() {
+	var method;
+	var noop = function () {};
+	var methods = [
+	'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+	'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+	'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+	'timeStamp', 'trace', 'warn'
+	];
+	var length = methods.length;
+	var console = (window.console = window.console || {});
 
+	while (length--) {
+		method = methods[length];
 
-
-// Load Assets
-head.load("js/vendor/underscore-min.js");
-head.load("js/vendor/native.history.min.js");
-head.load("js/vendor/url.min.js");
-head.load("js/vendor/string.min.js");
-head.load("js/vendor/jquery-1.11.0.min.js","js/vendor/isotope.pkgd.min.js",function(){
-	main_fn();
-});
-// gloavl variable
-var datajson = {};
-function main_fn() {
-
-  jQuery(document).ready(function() {
-    var urlQuery = url("?");
-
-    // load data 
-    var portfolio = {};   
-    $.ajax({
-      url: 'data/portfolio.json',
-      dataType: 'json',
-      cache:false,
-      async: true,
-      success: function(data) {
-        datajson.portfolio = data;        
-        renderPortfolio();
-      }
-    });
-
-    // portfolio view
-    var pageId = parseInt(url("?page")),
-    postperpage = 5;
-
-    function isInteger(x) { return Math.floor(x) === x; }
-    function isFloat(x) { return !!(x % 1); }
-    function renderPortfolio(){
-      if(!isNaN(pageId)) {
-        jQuery(".jumbotron").remove();
-
-        portfolio.length = datajson.portfolio.length;
-        var pagetoalFl =  portfolio.length/postperpage;
-
-        if (pagetoalFl<1) {
-          datajson.portfolio.totalpage=1;
-        }if (isFloat(pagetoalFl)){
-          datajson.portfolio.totalpage=parseInt(pagetoalFl)+1;
-        }else {
-          datajson.portfolio.totalpage=pagetoalFl
+        // Only stub undefined methods.
+        if (!console[method]) {
+        	console[method] = noop;
         }
-
-
-        portfolioControler();
-        showPortfolioPage();
-      }
     }
-   // portfolio item genarator
-   function showPortfolioPage(){
-    var startRange = '';
-    if (pageId==1){
-      startRange=pageId-1;
-    }else {
-      startRange=(pageId-1)*postperpage;
-    }
-    var endRange = (startRange+postperpage)-1;
-   // console.log(startRange,endRange);
-   for (var i=startRange;i<=endRange;i++){
-    var template = jQuery("#tmp_12").html();
-    var thisData = datajson.portfolio[i];
-    thisData.index=i;
-    if (S(thisData.thumbnail_url).contains('http') || S(thisData.thumbnail_url).contains('https')){
-      // nothig to modify
-    } else {
-      thisData.thumbnail_url="images/"+thisData.thumbnail_url;
-    }
+}());
+// loding js from CDN
+head.load("js/jquery.min.js",
+	"js/url.min.js",	
+	"js/underscore-min.js",
+	"js/jquery.lazyload.min.js",function(){
+		main_js();
+	});
 
-    console.log(thisData);
-    var test= _.template(template,thisData);
-    jQuery(".demo_1").append(test);    
-  }
-  jQuery(window).load(function() {
-   var $container = jQuery(".demo_1");    
-   $container.isotope({
-    itemSelector: '.col-md-4'
+function main_js() {
 
-  });
- });
-  
+	jQuery(document).ready(function() {
+		console.log('jQuery Runing.');
+// Invoke to use chrome frame for IE 7 User
+// Chrome Frame.
+jQuery('.ie7 body, .ie8 body').prepend('<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>');
+//remove dreamwever class from body
+jQuery('.drw').removeClass('drw');
+
+var apiUrl = 'http://web-c68fda40-7710-4a53-9d63-c08998fd85c3.runnable.com/';
+
+if (!url('?')) {
+	var tmp_header = jQuery("#tmp_header");
+	tmp_header.before(tmp_header.html());
+	var tpl = jQuery("#o_title").html();
+	var tpl_compl = _.template(tpl,{title:'Featured Project'});
+	jQuery("#o_title").before(tpl_compl);
+
+	var JsonUrl = apiUrl+"page_type.php?type=featured";		
+	type_list(JsonUrl);
 }
-  // portfolio navigation 
-  function portfolioControler() {      
-    var pagebottom = jQuery("#pagebottom").html();
-    jQuery(".demo_1").after(pagebottom);
-    jQuery(".pageIndicate").text(pageId+"/"+datajson.portfolio.totalpage);
-    var nextpageId = pageId+1,
-    prevPageId = pageId-1;
-    // prev    
-    if (prevPageId<datajson.portfolio.totalpage && prevPageId>0) {      
-      jQuery(".prevPage").attr({
-        "href": "?page="+prevPageId
-      });
-    }else{
-      jQuery(".prevPage").hide();
-    }    
-    // next
-    if (pageId<datajson.portfolio.totalpage) {      
-      jQuery(".nextPage").attr({
-        "href": "?page="+nextpageId
-      });
-    }else{
-      jQuery(".nextPage").hide();
-    }
-    
-  }
+var get_requset = '';
+if (url('?types')) {
+	get_requset= url('?types');
+}
+if (url('?color')) {
+	get_requset= url('?color');
+}
+if (url('?designer')) {
+	get_requset= url('?designer');
+}
+if (url('?developer')) {
+	get_requset= url('?developer');
+}
+if (url('?CMSused')) {
+	get_requset= url('?CMSused');
+}
+if (url('?status')) {
+	get_requset= url('?status');
+}
 
-// test 
-var urll = "";
-//var url = "53c83c4b04700.jpeg";
-urll = "http://www.awwwards.com/screenshots/2014/07/53c83c4b04700.jpeg";
-console.log(S(urll).contains('http'));
+if (get_requset!=''){	
+	var JsonUrl = apiUrl+"page_type.php?type="+get_requset;		
+	type_list(JsonUrl);
+}
+if (url('?viewAll')){
+	var JsonUrl = apiUrl;
+	type_list(JsonUrl);
+}
 
 });
+}
+
+// Google analytic
+site.analytic = function (uaid) {
+	eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('(3(i,s,o,g,r,a,m){i[\'5\']=r;i[r]=i[r]||3(){(i[r].q=i[r].q||[]).6(7)},i[r].l=1*8 9();a=s.b(o),m=s.c(o)[0];a.d=1;a.e=g;m.f.h(a,m)})(j,k,\'n\',\'//p.t-4.u/4.v\',\'2\');2(\'w\',x,\'y\');2(\'z\',\'A\');',37,37,'||devtool|function|analytics|GoogleAnalyticsObject|push|arguments|new|Date||createElement|getElementsByTagName|async|src|parentNode||insertBefore||window|document|||script||www||||google|com|js|create|uaid|auto|send|pageview'.split('|'),0,{}))
+};
+
+
+function type_list(jsonurl) {
+	jQuery.ajax({
+		dataType: "json",
+		cache:false,
+		url: jsonurl,		
+		success: function(data) {
+			var s= {};
+			s.data = data;
+			s.length = s.data.length;	
+			s.collength =0;	
+			s.rowid = 0;			
+			for (var i=0;i<s.length;i++) {	
+				var tmp = jQuery("#tmp_1").html();
+				var thisData =s.data[i];
+				// insert row
+				s.collength++;				
+				if (s.collength==1) {
+					jQuery("#o_content").append("<div class='row' id='row-"+s.rowid+"'></div>");
+				}
+				var test= _.template(tmp,thisData);
+				jQuery("#row-"+s.rowid).append(test);
+				if (s.collength==3) {
+					s.collength=0;
+					s.rowid++;
+				}
+
+			}
+			jQuery("img").lazyload({
+				effect : "fadeIn"
+			});	
+			jQuery(".ajaxloader").remove();
+		}
+	});
 }
