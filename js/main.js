@@ -128,7 +128,8 @@ function type_list(jsonurl) {
 
 			}
 			jQuery("img").lazyload({
-				effect : "fadeIn"
+				effect : "fadeIn",
+				 threshold : 200
 			});	
 			jQuery(".ajaxloader").remove();
 		}
